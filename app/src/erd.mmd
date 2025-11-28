@@ -1,0 +1,54 @@
+erDiagram
+    USERPROFILE ||--|| CART : personalCart
+    GROUP }o--|| CART : sharedCart
+    USERPROFILE ||--o{ GROUP : owns
+    USERPROFILE ||--o{ GROUP_MEMBER : isMember
+    GROUP ||--o{ GROUP_MEMBER : hasMembers
+    CART ||--o{ CART_ITEM : contains
+    FOODITEM ||--o{ CART_ITEM : listedIn
+
+    USERPROFILE {
+        uuid id
+        text username
+        timestamptz created_at
+        dietaryrestriction[] dietaryRestrictions
+        allergen[] allergies
+        uuid personalCart
+    }
+
+    GROUP {
+        uuid id
+        timestamptz created_at
+        text owner
+        uuid sharedCart
+    }
+
+    GROUP_MEMBER {
+        uuid group_id
+        text username
+    }
+
+    CART {
+        uuid id
+        timestamptz created_at
+    }
+
+    FOODITEM {
+        uuid id
+        timestamptz created_at
+        text name
+        numeric price
+        text barcode
+        timestamptz purchaseDate
+        timestamptz expirationDate
+        text imageURL
+        text[] ingredients
+        allergen[] allergens
+    }
+
+    CART_ITEM {
+        uuid cart_id
+        uuid food_item_id
+        int quantity
+        timestamptz added_at
+    }
